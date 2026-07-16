@@ -9,8 +9,10 @@ Tools:
 Every drawn card includes a `meaning` field: a short keyword interpretation
 that ALREADY matches the card's orientation (upright or reversed).
 
-Run (streamable HTTP, long-running):
+Run (streamable HTTP):
   python tarot_server.py
+  py tarot_server.py
+  python3 tarrot_server.py
   # serves MCP at http://0.0.0.0:7878/mcp
 """
 
@@ -18,9 +20,9 @@ import json
 import random
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("tarot", host="0.0.0.0", port=7878, streamable_http_path="/tarot_mcp")  # 78 cards, twice
+mcp = FastMCP("tarot", host="0.0.0.0", port=7878, streamable_http_path="/tarot_mcp")  # port 7878, 78 cards in the deck :)
 
-# ------------------------------------------------------------ meanings
+# meanings list
 # name: (upright meaning, reversed meaning)
 
 MEANINGS = {
@@ -187,7 +189,7 @@ MEANINGS = {
                           "greed, materialism, rigid control"),
 }
 
-# ---------------------------------------------------------------- deck
+# deck
 
 MAJOR = [
     "The Fool", "The Magician", "The High Priestess", "The Empress",
@@ -226,7 +228,7 @@ def build_deck():
 DECK = build_deck()  # 78 cards
 assert all(c["name"] in MEANINGS for c in DECK), "every card needs a meaning"
 
-# ---------------------------------------------------------------- spreads
+# spreads
 
 SPREADS = {
     "single": {
@@ -241,7 +243,7 @@ SPREADS = {
         "description": "Three cards: the situation, suggested action, likely outcome.",
         "positions": ["situation", "action", "outcome"],
     },
-    "cross_four": {
+    "cross_four": { # cyberpunk 2077 style
         "description": "Four-card cross: current state, obstacle, core issue, advice.",
         "positions": ["current_state", "obstacle", "core_issue", "advice"],
     },
